@@ -1,6 +1,5 @@
 package org.utkarsh.taskmanager.model;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -18,8 +17,12 @@ public class Task {
 
     private boolean priority;
     private Date dueDate;
-    private Date createdAt=new Date();
+    private final Date createdAt=new Date();
     private Date updatedAt=new Date();
+
+    @ManyToOne
+    @JoinColumn(name="user_id")
+    private User user;
 
     public enum Status {
         PENDING,
