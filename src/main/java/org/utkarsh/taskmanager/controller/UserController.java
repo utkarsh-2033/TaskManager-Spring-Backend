@@ -36,7 +36,12 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<String> loginUser(@RequestBody LoginUser user){
-        service.loginUser(user);
-        return ResponseEntity.ok().build();
+        try {
+            String token = service.loginUser(user);
+            return ResponseEntity.ok().body(token);
+        }
+        catch (Exception e) {
+            return ResponseEntity.status(401).body("Invalid username or password");
+        }
     }
 }
