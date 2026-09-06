@@ -1,6 +1,8 @@
 package org.utkarsh.taskmanager.controller;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -40,8 +42,8 @@ public class UserController {
             String token = service.loginUser(user);
             return ResponseEntity.ok().body(token);
         }
-        catch (Exception e) {
-            return ResponseEntity.status(401).body("Invalid username or password");
+        catch (AuthenticationException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
         }
     }
 }
