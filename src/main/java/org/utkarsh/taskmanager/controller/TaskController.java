@@ -6,6 +6,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.utkarsh.taskmanager.dto.CreateTask;
+import org.utkarsh.taskmanager.dto.TasksResponse;
 import org.utkarsh.taskmanager.model.Task;
 import org.utkarsh.taskmanager.service.TaskService;
 
@@ -36,17 +37,18 @@ public class TaskController {
     }
 
     @GetMapping("/tasks")
-    public ResponseEntity<List<Task>> getAllTasks(@AuthenticationPrincipal UserDetails userDetails){
+    public ResponseEntity<List<TasksResponse>> getAllTasks(@AuthenticationPrincipal UserDetails userDetails){
         String username=userDetails.getUsername();
-        List<Task> tasks=service.getAllTasks(username);
+        List<TasksResponse> tasks=service.getAllTasks(username);
 //        System.out.println("Tasks retrieved: " + tasks);
         return ResponseEntity.ok(tasks);
     }
 
     @GetMapping("/task/{id}")
-    public ResponseEntity<Task> getTask(@PathVariable String id ,
+    public ResponseEntity<TasksResponse> getTask(@PathVariable String id ,
                                         @AuthenticationPrincipal UserDetails userDetails){
-        Task task=service.getTask(id , userDetails.getUsername());
+        System.out.println(userDetails.getUsername());
+        TasksResponse task=service.getTask(id , userDetails.getUsername());
         if (task!=null){
             return ResponseEntity.ok(task);
         }
@@ -54,10 +56,10 @@ public class TaskController {
     }
 
     @PutMapping("/task/{id}")
-    public ResponseEntity<Task> updateTask(@PathVariable String id,
+    public ResponseEntity<TasksResponse> updateTask(@PathVariable String id,
                                            @RequestBody Task task ,
                                            @AuthenticationPrincipal UserDetails userDetails){
-        Task updatedTask=service.updateTask(id, task , userDetails.getUsername());
+        TasksResponse updatedTask=service.updateTask(id, task , userDetails.getUsername());
         if (updatedTask!=null){
             return ResponseEntity.ok(updatedTask);
         }
