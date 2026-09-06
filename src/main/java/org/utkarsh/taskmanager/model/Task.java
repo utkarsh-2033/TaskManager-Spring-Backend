@@ -41,6 +41,14 @@ public class Task {
         this.dueDate = dueDate;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public String getId() {
         return id;
     }
@@ -71,6 +79,30 @@ public class Task {
 
     public Date getUpdatedAt() {
         return updatedAt;
+    }
+
+    public void setDueDate(Date dueDate) {
+        this.dueDate = dueDate;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public void setPriority(boolean priority) {
+        this.priority = priority;
     }
 
     @Override

@@ -20,11 +20,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     private final UserDetailsService userDetailsService;
-    private final JwtFilter JwtFilter;
+    private final JwtFilter jwtFilter;
 
-    SecurityConfig(UserDetailsService userDetailsService, JwtFilter JwtFilter, JwtFilter jwtFilter){
+    SecurityConfig(UserDetailsService userDetailsService,  JwtFilter jwtFilter){
         this.userDetailsService=userDetailsService;
-        this.JwtFilter = jwtFilter;
+        this.jwtFilter = jwtFilter;
     }
 
     @Bean
@@ -55,7 +55,7 @@ public class SecurityConfig {
                 .sessionManagement(session->session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())
-                .addFilterBefore(JwtFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
 

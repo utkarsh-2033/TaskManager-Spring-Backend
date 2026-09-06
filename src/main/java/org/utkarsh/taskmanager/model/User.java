@@ -2,6 +2,7 @@ package org.utkarsh.taskmanager.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -19,10 +20,19 @@ public class User {
     private Role role;
 
     @OneToMany(mappedBy = "user" , cascade = CascadeType.ALL)
-    private List<Task> tasks;
+    private List<Task> tasks = new ArrayList<>();;
 
     public List<Task> getTasks() {
-        return  tasks;
+        return tasks;
+    }
+
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
+    }
+
+    public void addTask(Task task){
+        tasks.add(task);
+        task.setUser(this);
     }
 
     public String getEmail() {
@@ -48,10 +58,6 @@ public class User {
     public Role getRole() {
         return role;
     }
-
-//    public void setTasks(Task tasks) {
-//        this.tasks = List.of(new Task[]{tasks});
-//    }
 
     public enum Role{
         Admin ,

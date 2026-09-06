@@ -4,8 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.utkarsh.taskmanager.dto.CreateTask;
 import org.utkarsh.taskmanager.model.Task;
+import org.utkarsh.taskmanager.model.User;
 import org.utkarsh.taskmanager.repository.TasksRepo;
+import org.utkarsh.taskmanager.repository.UserRepo;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -13,36 +16,53 @@ public class TaskService {
 
     @Autowired
     private TasksRepo tasksRepo;
+    @Autowired
+    private UserRepo userRepo;
 
-    public Task addTask(CreateTask task) {
+    public Task addTask(CreateTask task , String username) {
+        User user=userRepo.findByUsername(username);
         Task newtask= new Task(task.getTitle(), task.getDescription(), task.getStatus(), task.isPriority(), task.getDueDate());
+        newtask.setUser(user);
         tasksRepo.save(newtask);
         
         return newtask;
     }
 
-    public List<Task> getAllTasks() {
-        return tasksRepo.findAll();
+    public List<Task> getAllTasks(String username) {
+        User user=userRepo.findByUsername(username);
+        return user.getTasks();
     }
 
-    public Task getTask(String id) {
-        return tasksRepo.findById(id).orElse(null);
+    public Task getTask(String id , String username) {
+        Task task=tasksRepo.findById(id).orElse(null);
+        if(task!=null && task.getUser().getUsername().equals(username)) return task;
+        return null;
     }
 
-    public Task updateTask(String id, Task task) {
+    public Task updateTask(String id, Task task , String username) {
+//      User user=userRepo.findByUsername(username);
+        Task t = tasksRepo.findById(id).orElse(null);
+        if (t != null && t.getUser().getUsername().equals(username)) {
+//          t.setUser(user);
+            t.setDescription(task.getDescription());
+            t.setPriority(task.isPriority());
+            t.setStatus(task.getStatus());
+            t.setUpdatedAt(new Date());
+            t.setDueDate(task.getDueDate());
+            tasksRepo.save(t);
+            return t;
 
-        Task t=null;
-        if (tasksRepo.existsById(id)) {
-            t = tasksRepo.save(task);
         }
-        return t;
+        return null;
 
     }
-    public boolean deleteTask(String id){
-        if(tasksRepo.existsById((id))){
-            return false;
+    public boolean deleteTask(String id , String username){
+//      User user=userRepo.findByUsername(username);
+        Task t = tasksRepo.findById(id).orElse(null);
+        if (t != null && t.getUser().getUsername().equals(username)) {
+            tasksRepo.deleteById(id);
+            return true;
         }
-            tasksRepo.deleteById((id));
-        return true;
+        return false;
     }
 }
