@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.utkarsh.taskmanager.dto.CreateTask;
 import org.utkarsh.taskmanager.dto.TasksResponse;
+import org.utkarsh.taskmanager.dto.UpdateTask;
 import org.utkarsh.taskmanager.model.Task;
 import org.utkarsh.taskmanager.service.TaskService;
 
@@ -57,7 +58,7 @@ public class TaskController {
 
     @PutMapping("/task/{id}")
     public ResponseEntity<TasksResponse> updateTask(@PathVariable String id,
-                                           @RequestBody Task task ,
+                                           @RequestBody UpdateTask task ,
                                            @AuthenticationPrincipal UserDetails userDetails){
         TasksResponse updatedTask=service.updateTask(id, task , userDetails.getUsername());
         if (updatedTask!=null){

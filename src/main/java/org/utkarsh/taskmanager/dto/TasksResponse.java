@@ -4,7 +4,7 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import org.utkarsh.taskmanager.model.Task;
 
-import java.util.Date;
+import java.time.Instant;
 
 public class TasksResponse {
     private String id;
@@ -15,11 +15,11 @@ public class TasksResponse {
     private Task.Status status;
 
     private boolean priority;
-    private Date dueDate;
-    private Date createdAt=new Date();
-    private Date updatedAt=new Date();
+    private Instant dueDate;
+    private Instant createdAt=Instant.now();
+    private Instant updatedAt=Instant.now();
 
-    public TasksResponse(String id, String title, String description, Task.Status status, boolean priority, Date dueDate, Date createdAt, Date updatedAt) {
+    public TasksResponse(String id, String title, String description, Task.Status status, boolean priority, Instant dueDate, Instant createdAt, Instant updatedAt) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -70,27 +70,27 @@ public class TasksResponse {
         this.priority = priority;
     }
 
-    public Date getDueDate() {
+    public Instant getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(Date dueDate) {
+    public void setDueDate(Instant dueDate) {
         this.dueDate = dueDate;
     }
 
-    public Date getCreatedAt() {
+    public Instant getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+        public void setCreatedAt(Instant createdAt) {
         this.createdAt = createdAt;
     }
 
-    public Date getUpdatedAt() {
+    public Instant getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Date updatedAt) {
+    public void setUpdatedAt(Instant updatedAt) {
         this.updatedAt = updatedAt;
     }
 

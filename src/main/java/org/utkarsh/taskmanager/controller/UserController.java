@@ -29,6 +29,7 @@ public class UserController {
         User newuser=new User();
         newuser.setPassword(hashedPassword);
         newuser.setUsername(user.getUsername());
+        newuser.setRole(User.Role.USER);
         service.registerUser(newuser);
         return ResponseEntity.ok().build();
     }

@@ -43,6 +43,10 @@ public class User {
         return username;
     }
 
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
     public String getPassword() {
         return password;
     }
@@ -60,7 +64,7 @@ public class User {
     }
 
     public enum Role{
-        Admin ,
-        User
+        ADMIN ,
+        USER
     }
 }

@@ -4,11 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.utkarsh.taskmanager.dto.CreateTask;
 import org.utkarsh.taskmanager.dto.TasksResponse;
+import org.utkarsh.taskmanager.dto.UpdateTask;
 import org.utkarsh.taskmanager.model.Task;
 import org.utkarsh.taskmanager.model.User;
 import org.utkarsh.taskmanager.repository.TasksRepo;
 import org.utkarsh.taskmanager.repository.UserRepo;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -66,16 +68,17 @@ public class TaskService {
         return null;
     }
 
-    public TasksResponse updateTask(String id, Task task , String username) {
+    public TasksResponse updateTask(String id, UpdateTask task , String username) {
 //      User user=userRepo.findByUsername(username);
         Task t = tasksRepo.findById(id).orElse(null);
         if (t != null && t.getUser().getUsername().equals(username)) {
 //          t.setUser(user);
+            t.setTitle(task.getTitle());
             t.setDescription(task.getDescription());
             t.setPriority(task.isPriority());
             t.setStatus(task.getStatus());
-            t.setUpdatedAt(new Date());
             t.setDueDate(task.getDueDate());
+            t.setUpdatedAt(Instant.now());
             tasksRepo.save(t);
 
             return new TasksResponse(

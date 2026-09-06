@@ -2,6 +2,7 @@ package org.utkarsh.taskmanager.model;
 
 import jakarta.persistence.*;
 
+import java.time.Instant;
 import java.util.Date;
 
 @Entity
@@ -16,9 +17,9 @@ public class Task {
     private Status status;
 
     private boolean priority;
-    private Date dueDate;
-    private final Date createdAt=new Date();
-    private Date updatedAt=new Date();
+    private Instant dueDate;
+    private final Instant createdAt=Instant.now();
+    private Instant updatedAt=Instant.now();
 
     @ManyToOne
     @JoinColumn(name="user_id")
@@ -33,7 +34,7 @@ public class Task {
     public Task() {
     }
 
-    public Task(String title, String description, Status status, boolean priority, Date dueDate) {
+    public Task(String title, String description, Status status, boolean priority, Instant dueDate) {
         this.title = title;
         this.description = description;
         this.status = status;
@@ -69,23 +70,23 @@ public class Task {
         return priority;
     }
 
-    public Date getDueDate() {
+    public Instant getDueDate() {
         return dueDate;
     }
 
-    public Date getCreatedAt() {
+    public Instant getCreatedAt() {
         return createdAt;
     }
 
-    public Date getUpdatedAt() {
+    public Instant getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setDueDate(Date dueDate) {
+    public void setDueDate(Instant dueDate) {
         this.dueDate = dueDate;
     }
 
-    public void setUpdatedAt(Date updatedAt) {
+    public void setUpdatedAt(Instant updatedAt) {
         this.updatedAt = updatedAt;
     }
 
